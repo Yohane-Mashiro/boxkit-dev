@@ -1,0 +1,15 @@
+FROM quay.io/fedora/fedora-toolbox:latest
+
+LABEL com.github.containers.toolbox="true" \
+      usage="This image is meant to be used with the toolbox or distrobox command" \
+      summary="JetBrains toolbox image for distrobox." \
+      maintainer="faeizmahrus@outlook.com"
+
+# Copy the setup scripts and package list
+COPY ../scripts/my-jb-toolbox.sh /
+COPY ../scripts/distrobox-shims.sh /
+COPY ../packages/my-jb-toolbox.packages /
+
+# Run the setup scripts
+RUN chmod +x my-jb-toolbox.sh distrobox-shims.sh && /my-jb-toolbox.sh
+RUN rm /my-jb-toolbox.sh /distrobox-shims.sh /my-jb-toolbox.packages
